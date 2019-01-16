@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vote</title>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+    <script src="javascripts/vote.js"></script>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+
+</head>
+
+<body ng-app="app">
+
+    <ui-view></ui-view>
+
+    <script type="text/ng-template " id="/main.html ">
+
+        <div class="mainBody">
+            <nav class=" navbar navbar-expand-lg navbar-dark bg-dark ">
+                <a class="navbar-brand " href="#/main">Vote</a>
+            </nav>
+
+            <div class="container ">
+                <div class="row ">
+                    <div class="col-md ">
+                        <p>{{info}}</p>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm ">
+                        <div class="form-name">
+                            <input ng-model="sessionName" type="text " id="name" placeholder="Enter desired Username">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <button type="submit " class="btn btn-danger " ng-click="begin()">Start</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template " id="/voteTab.html ">
+        <div class="mainBody">
+            <nav class=" navbar navbar-header navbar-dark bg-dark ">
+                <a class="navbar-brand " href="#/main">Vote</a>
+                <p class="navbar-text">User: {{name}}</p>
+                <p class="navbar-text" ng-click="toAdmin()">Change things</p>
+            </nav>
+            Current Candidates
+            <ul class="people" ng-init="refresh()" ng-model="people">
+                    <li ng-repeat="canidate in allcanidates | orderBy: 'Candidate">
+                        <form class="individualComment">
+                        <input type="checkbox" ng-model="canidate.checked">
+                        {{canidate:Candidate}}
+                        </form>
+                    </li>
+            </ul>
+            <button type="submit">Submit</button>
+            Ballot
+            <ul class="people" ng-init="refresh()" ng-model="people">
+                    <li ng-repeat="canidate in ballot | orderBy: 'Candidate">
+                        <div class="individualComment">
+                        {{canidate:Candidate}}
+                        </div>
+                    </li>
+            </ul>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/admin.html">
+        <div class="mainBody">
+            <nav class=" navbar navbar-header navbar-dark bg-dark ">
+                <a class="navbar-brand " href="#/main">Vote</a>
+                <p class="navbar-text">User: {{name}}</p>
+                <p class="navbar-text" ng-click="toAdmin()">Change things</p>
+            </nav>
+            <ul class="people" ng-init="refresh()" ng-model="people">
+                    <li ng-repeat="canidate in allcanidates | orderBy:['-numVotes','Candidate']">
+                        <div class="individualComment">
+                        x {{canidate:Candidate}} - votes:{{canidate:numVotes}}
+                        </div>
+                    </li>
+                </ul>
+        </div>
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js " integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo " crossorigin="anonymous "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js " integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49 " crossorigin="anonymous "></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js " integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy " crossorigin="anonymous "></script>
+</body>
+
+</html>
